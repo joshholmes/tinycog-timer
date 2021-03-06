@@ -5,7 +5,7 @@
     margin: 0 auto;
 }
 
-#sw-time {
+#timer-for-elementor-time {
     width: 100%;
     padding: 20px 0;
     font-size: 48px;
@@ -16,12 +16,12 @@
     border: 2px solid white;
 }
 
-#sw-time.pre-countdown {
+#timer-for-elementor-time.pre-countdown {
     color: red;
 }
 
-#sw-rst,
-#sw-go {
+#timer-for-elementor-rst,
+#timer-for-elementor-go {
     box-sizing: border-box;
     width: 50%;
     cursor: pointer;
@@ -32,11 +32,11 @@
     border: 2px solid white;
 }
 
-#sw-rst {
+#timer-for-elementor-rst {
     background-color: #0075b0;
 }
 
-#sw-go {
+#timer-for-elementor-go {
     background-color: #f0ab00;
 }
 

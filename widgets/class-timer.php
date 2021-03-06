@@ -180,15 +180,15 @@ class Timer extends Widget_Base {
 
 		<div class="timer">
 		
-			<input id="sw-preCountSeconds" type="hidden" value="<?php echo wp_kses( $settings['preCountDownSeconds'], array() ); ?>" />
-			<input id="sw-totalSeconds" type="hidden" value="<?php echo wp_kses( $settings['countDownLength'], array() ); ?>" />
-			<div id="sw-time" <?php echo $this->get_render_attribute_string( 'countDownLength' ); ?>></div>
-			<div id="sw-go" onclick="startTimer()" class="timer-button" <?php echo $this->get_render_attribute_string( 'startButtonText' ); ?>><?php echo wp_kses( $settings['startButtonText'], array() ); ?></div>
-			<div id="sw-rst" onclick="resetTimer()" class="timer-button" <?php echo $this->get_render_attribute_string( 'endButtonText' ); ?>><?php echo wp_kses( $settings['endButtonText'], array() ); ?></div>
+			<input id="timer-for-elementor-preCountSeconds" type="hidden" value="<?php echo wp_kses( $settings['preCountDownSeconds'], array() ); ?>" />
+			<input id="timer-for-elementor-totalSeconds" type="hidden" value="<?php echo wp_kses( $settings['countDownLength'], array() ); ?>" />
+			<div id="timer-for-elementor-time" <?php echo $this->get_render_attribute_string( 'countDownLength' ); ?>></div>
+			<div id="timer-for-elementor-go" onclick="startTimer()" class="timer-button" <?php echo $this->get_render_attribute_string( 'startButtonText' ); ?>><?php echo wp_kses( $settings['startButtonText'], array() ); ?></div>
+			<div id="timer-for-elementor-rst" onclick="resetTimer()" class="timer-button" <?php echo $this->get_render_attribute_string( 'endButtonText' ); ?>><?php echo wp_kses( $settings['endButtonText'], array() ); ?></div>
 		</div>
 		<script type="text/javascript">
-				var totalSeconds = document.getElementById('sw-totalSeconds').value;
-				var preCountSeconds = document.getElementById('sw-preCountSeconds').value;
+				var totalSeconds = document.getElementById('timer-for-elementor-totalSeconds').value;
+				var preCountSeconds = document.getElementById('timer-for-elementor-preCountSeconds').value;
 
 				function timer_convert2HHMMSS(seconds) {
 					var hours   = Math.floor(seconds/ 3600);
@@ -201,7 +201,7 @@ class Timer extends Widget_Base {
 					return hours+':'+minutes+':'+seconds;
 				}
 
-				const timer = document.getElementById("sw-time");
+				const timer = document.getElementById("timer-for-elementor-time");
 				var timeInterval, timeDown, tempTimeInterval;
 
 				const shortBeep = new Audio("<?php echo plugin_dir_url( __FILE__ ) ?>../assets/audio/short-beep.wav");
@@ -289,14 +289,14 @@ class Timer extends Widget_Base {
 		view.addInlineEditingAttributes( 'endButtonText', 'basic' );
 		#>
 		<div class="timer">
-		<input id="sw-totalSeconds" type="hidden" value="{{{ settings.countDownLength }}}" />
-        <div id="sw-time">{{{ settings.countDownLength }}}</div>
-        <button id="sw-go" class="timer-button">{{{ settings.startButtonText }}}</button>
-        <button id="sw-rst" class="timer-button" onclick="resetTimer()">{{{ settings.endButtonText }}}</button>
+		<input id="timer-for-elementor-totalSeconds" type="hidden" value="{{{ settings.countDownLength }}}" />
+        <div id="timer-for-elementor-time">{{{ settings.countDownLength }}}</div>
+        <button id="timer-for-elementor-go" class="timer-button">{{{ settings.startButtonText }}}</button>
+        <button id="timer-for-elementor-rst" class="timer-button" onclick="resetTimer()">{{{ settings.endButtonText }}}</button>
     	</div>
 
 		<script type="text/javascript">
-				var totalSeconds = document.getELementById('sw-totalSeconds').value;
+				var totalSeconds = document.getELementById('timer-for-elementor-totalSeconds').value;
 
 				function timer_convert2HHMMSS(seconds) {
 					var hours   = Math.floor(seconds/ 3600);
