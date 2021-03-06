@@ -1,0 +1,59 @@
+.timer {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+#sw-time {
+    width: 100%;
+    padding: 20px 0;
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    background: #0b2d49;
+    color: #f0ab00;
+    border: 2px solid white;
+}
+
+#sw-rst,
+#sw-go {
+    box-sizing: border-box;
+    width: 50%;
+    cursor: pointer;
+    padding: 20px 0;
+    border: 0;
+    color: #fff;
+    font-size: 20px;
+    border: 2px solid white;
+}
+
+#sw-rst {
+    background-color: #0075b0;
+}
+
+#sw-go {
+    background-color: #f0ab00;
+}
+
+#timer {
+    margin-bottom: 25px;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #2a9d8f;
+}
+
+.timer-button {
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    padding: 1rem 2rem;
+    margin: 0;
+    text-decoration: none;
+    color: #000; 
+    font-family: sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 250ms ease-in-out;
+}
