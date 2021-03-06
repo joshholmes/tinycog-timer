@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) || die();
  *
  * @since 1.0.0
  */
-class Timer extends Widget_Base {
+class Stopwatch extends Widget_Base {
 	/**
 	 * Class constructor.
 	 *
@@ -37,7 +37,7 @@ class Timer extends Widget_Base {
 	public function __construct( $data = array(), $args = null ) {
 		parent::__construct( $data, $args );
 
-		wp_register_style( 'timer', plugins_url( '/assets/css/timer.css', TIMER_FOR_ELEMENTOR ), array(), '1.0.0' );
+		wp_register_style( 'stopwatch', plugins_url( '/assets/css/timer.css', TIMER_FOR_ELEMENTOR ), array(), '1.0.0' );
 	}
 
 	/**
@@ -50,7 +50,7 @@ class Timer extends Widget_Base {
 	 * @return string Widget name.
 	 */
 	public function get_name() {
-		return 'timer';
+		return 'stopwatch';
 	}
 
 	/**
@@ -63,7 +63,7 @@ class Timer extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Timer for Elementor - Countdown', 'elementor-timer' );
+		return __( 'Timer for Elementor - Stopwatch', 'elementor-timer-stopwatch' );
 	}
 
 	/**
@@ -101,7 +101,7 @@ class Timer extends Widget_Base {
 	 * Enqueue styles.
 	 */
 	public function get_style_depends() {
-		return array( 'timer' );
+		return array( 'stopwatch' );
 	}
 
 	/**
@@ -127,15 +127,6 @@ class Timer extends Widget_Base {
 				'label'   => __( 'Pre Count down Seconds', 'elementor-timer' ),
 				'type'    => Controls_Manager::NUMBER,
 				'default' => __( '10', 'elementor-timer' ),
-			)
-		);
-
-		$this->add_control(
-			'countDownLength',
-			array(
-				'label'   => __( 'Count down in Seconds', 'elementor-timer' ),
-				'type'    => Controls_Manager::NUMBER,
-				'default' => __( '180', 'elementor-timer' ),
 			)
 		);
 
@@ -172,7 +163,6 @@ class Timer extends Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 
-		$this->add_inline_editing_attributes( 'countDownLength', 'basic' );
 		$this->add_inline_editing_attributes( 'startButtonText', 'basic' );
 		$this->add_inline_editing_attributes( 'endButtonText', 'basic' );
 		?>
@@ -180,14 +170,13 @@ class Timer extends Widget_Base {
 		<div class="timer">
 		
 			<input id="timer-for-elementor-preCountSeconds" type="hidden" value="<?php echo wp_kses( $settings['preCountDownSeconds'], array() ); ?>" />
-			<input id="timer-for-elementor-totalSeconds" type="hidden" value="<?php echo wp_kses( $settings['countDownLength'], array() ); ?>" />
 			<div id="timer-for-elementor-time" <?php echo $this->get_render_attribute_string( 'countDownLength' ); ?>></div>
 			<div id="timer-for-elementor-go" onclick="startTimer()" class="timer-button" <?php echo $this->get_render_attribute_string( 'startButtonText' ); ?>><?php echo wp_kses( $settings['startButtonText'], array() ); ?></div>
 			<div id="timer-for-elementor-rst" onclick="resetTimer()" class="timer-button" <?php echo $this->get_render_attribute_string( 'endButtonText' ); ?>><?php echo wp_kses( $settings['endButtonText'], array() ); ?></div>
 		</div>
 		<script type="text/javascript">
-				var totalSeconds = document.getElementById('timer-for-elementor-totalSeconds').value;
 				var preCountSeconds = document.getElementById('timer-for-elementor-preCountSeconds').value;
+				var totalSeconds = 0;
 
 				function timer_convert2HHMMSS(seconds) {
 					var hours   = Math.floor(seconds/ 3600);
@@ -201,7 +190,7 @@ class Timer extends Widget_Base {
 				}
 
 				const timer = document.getElementById("timer-for-elementor-time");
-				var timeInterval, timeDown, tempTimeInterval;
+				var preCountDownInterval, countUpInterval;
 
 				const shortBeep = new Audio("<?php echo plugin_dir_url( __FILE__ ) ?>../assets/audio/short-beep.wav");
 				const longBeep = new Audio("<?php echo plugin_dir_url( __FILE__ ) ?>../assets/audio/long-beep.wav");
@@ -221,41 +210,38 @@ class Timer extends Widget_Base {
 						longBeep.play();
 
 						timerRunning = true;
-						tempTimeInterval = createTimeInterval(
-							preCountSeconds,
-							(temp = true),
-							() => {
-								timeInterval = createTimeInterval(totalSeconds, false);
-							}
-						);
+						preCountDownInterval = preCountDown(preCountSeconds);
 					}
 				};
 
 				resetTimer = () => {
-					clearInterval(timeInterval);
-					clearInterval(tempTimeInterval);
+					clearInterval(countUpInterval);
+					clearInterval(preCountDownInterval);
 					timer.innerHTML = timer_convert2HHMMSS(totalSeconds);
 					timerRunning = false;
 				};
 
-				const createTimeInterval = (seconds, temp = false, nextCountDown) => {
+				const countUp = (seconds) => {
 					return setInterval(() => {
-						if (temp) {
-							timer.classList.add("pre-countdown");
-						}
-						else {
-							timer.classList.remove("pre-countdown");
-						}
+						timer.classList.remove("pre-countdown");
+
+						timer.innerHTML = timer_convert2HHMMSS(seconds);
+
+						seconds++;
+					}, 1000);
+				};
+
+				const preCountDown = (seconds) => {
+					return setInterval(() => {
+						timer.classList.add("pre-countdown");
 
 						timer.innerHTML = timer_convert2HHMMSS(seconds);
 
 						// We check if the seconds equals 0
 						if (seconds == 0) {
 							playLongBeepSound();
-							clearInterval(temp ? tempTimeInterval : timeInterval);
-							if (nextCountDown != null) {
-								nextCountDown();
-							}
+							clearInterval(preCountDownInterval);
+							countUpInterval = countUp(0);
 						}
 						allowedSeconds = [3, 2, 1];
 						if (allowedSeconds.some((el) => el == seconds)) {
@@ -295,7 +281,7 @@ class Timer extends Widget_Base {
     	</div>
 
 		<script type="text/javascript">
-				var totalSeconds = document.getELementById('timer-for-elementor-totalSeconds').value;
+				var totalSeconds = 0;
 
 				function timer_convert2HHMMSS(seconds) {
 					var hours   = Math.floor(seconds/ 3600);

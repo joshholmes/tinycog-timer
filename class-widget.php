@@ -67,6 +67,7 @@ class Widgets {
 	 */
 	private function include_widgets_files() {
 		require_once 'widgets/class-timer.php';
+		require_once 'widgets/class-stopwatch.php';
 	}
 
 	/**
@@ -83,6 +84,7 @@ class Widgets {
 
 		// Register the plugin widget classes.
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Timer() );
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Stopwatch() );
 	}
 
 	/**
