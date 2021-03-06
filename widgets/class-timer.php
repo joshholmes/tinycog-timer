@@ -215,29 +215,39 @@ class Timer extends Widget_Base {
 					longBeep.play();
 				};
 
+				timerRunning = false;
 				startTimer = () => {
-					timer.enabled = false;
-					shortBeep.play();
-					longBeep.play();
+					if (!timerRunning) {
+						shortBeep.play();
+						longBeep.play();
 
-					tempTimeInterval = createTimeInterval(
-						preCountSeconds,
-						(temp = true),
-						() => {
-							timeInterval = createTimeInterval(totalSeconds, false);
-						}
-					);
+						timerRunning = true;
+						tempTimeInterval = createTimeInterval(
+							preCountSeconds,
+							(temp = true),
+							() => {
+								timeInterval = createTimeInterval(totalSeconds, false);
+							}
+						);
+					}
 				};
 
 				resetTimer = () => {
 					clearInterval(timeInterval);
 					clearInterval(tempTimeInterval);
 					timer.innerHTML = timer_convert2HHMMSS(totalSeconds);
-					timer.enabled = true;
+					timerRunning = false;
 				};
 
 				const createTimeInterval = (seconds, temp = false, nextCountDown) => {
 					return setInterval(() => {
+						if (temp) {
+							timer.classList.add("pre-countdown");
+						}
+						else {
+							timer.classList.remove("pre-countdown");
+						}
+
 						timer.innerHTML = timer_convert2HHMMSS(seconds);
 
 						// We check if the seconds equals 0

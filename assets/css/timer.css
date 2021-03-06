@@ -16,6 +16,10 @@
     border: 2px solid white;
 }
 
+#sw-time.pre-countdown {
+    color: red;
+}
+
 #sw-rst,
 #sw-go {
     box-sizing: border-box;
