@@ -145,7 +145,7 @@ class Timer extends Widget_Base {
 			array(
 				'label'   => __( 'startButtonText', 'elementor-timer' ),
 				'type'    => Controls_Manager::TEXT,
-				'default' => __( 'startButtonText', 'elementor-timer' ),
+				'default' => __( 'Start', 'elementor-timer' ),
 			)
 		);
 
@@ -154,7 +154,7 @@ class Timer extends Widget_Base {
 			array(
 				'label'   => __( 'endButtonText', 'elementor-timer' ),
 				'type'    => Controls_Manager::TEXT,
-				'default' => __( 'endButtonText', 'elementor-timer' ),
+				'default' => __( 'End', 'elementor-timer' ),
 			)
 		);
 
