@@ -179,6 +179,7 @@ class Timer extends Widget_Base {
 		?>
 
 		<div class="timer">
+		
 			<input id="sw-preCountSeconds" type="hidden" value="<?php echo wp_kses( $settings['preCountDownSeconds'], array() ); ?>" />
 			<input id="sw-totalSeconds" type="hidden" value="<?php echo wp_kses( $settings['countDownLength'], array() ); ?>" />
 			<div id="sw-time" <?php echo $this->get_render_attribute_string( 'countDownLength' ); ?>></div>
@@ -194,7 +195,6 @@ class Timer extends Widget_Base {
 					var minutes = Math.floor((seconds - (hours * 3600)) / 60);
 					var seconds = seconds - (hours * 3600) - (minutes * 60);
 
-
 					if (hours   < 10) {hours   = "0"+hours;}
 					if (minutes < 10) {minutes = "0"+minutes;}
 					if (seconds < 10) {seconds = "0"+seconds;}
@@ -204,19 +204,22 @@ class Timer extends Widget_Base {
 				const timer = document.getElementById("sw-time");
 				var timeInterval, timeDown, tempTimeInterval;
 
-				const shortBeep = new Audio("/wp-content/uploads/short-beep.wav");
-				const longBeep = new Audio("/wp-content/uploads/long-beep.wav");
+				const shortBeep = new Audio("<?php echo plugin_dir_url( __FILE__ ) ?>../assets/audio/short-beep.wav");
+				const longBeep = new Audio("<?php echo plugin_dir_url( __FILE__ ) ?>../assets/audio/long-beep.wav");
 
 				const playBeepSound = () => {
 					shortBeep.play();
 				};
 
-				const playLongBeebSound = () => {
+				const playLongBeepSound = () => {
 					longBeep.play();
 				};
 
 				startTimer = () => {
+					timer.enabled = false;
 					shortBeep.play();
+					longBeep.play();
+
 					tempTimeInterval = createTimeInterval(
 						preCountSeconds,
 						(temp = true),
@@ -229,24 +232,26 @@ class Timer extends Widget_Base {
 				resetTimer = () => {
 					clearInterval(timeInterval);
 					clearInterval(tempTimeInterval);
-					timer.innerHTML = "03:00";
+					timer.innerHTML = timer_convert2HHMMSS(totalSeconds);
+					timer.enabled = true;
 				};
 
-				const createTimeInterval = (seconds, temp = false, countDown) => {
+				const createTimeInterval = (seconds, temp = false, nextCountDown) => {
 					return setInterval(() => {
 						timer.innerHTML = timer_convert2HHMMSS(seconds);
 
 						// We check if the seconds equals 0
 						if (seconds == 0) {
-							playLongBeebSound();
+							playLongBeepSound();
 							clearInterval(temp ? tempTimeInterval : timeInterval);
-							if (countDown != null) {
-								countDown();
+							if (nextCountDown != null) {
+								nextCountDown();
 							}
 						}
 						allowedSeconds = [3, 2, 1];
-						if (allowedSeconds.some((el) => el == seconds))
+						if (allowedSeconds.some((el) => el == seconds)) {
 							playBeepSound();
+						}
 						seconds--;
 					}, 1000);
 				};
