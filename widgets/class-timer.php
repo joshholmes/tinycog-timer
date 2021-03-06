@@ -179,25 +179,22 @@ class Timer extends Widget_Base {
 		?>
 
 		<div class="timer">
-			<input id="sw-preCountSeconds" type="hidden" value="<?php $settings['preCountDownSeconds']; ?>" />
-			<input id="sw-totalSeconds" type="hidden" value="<?php $settings['countDownLength']; ?>" />
+			<input id="sw-preCountSeconds" type="hidden" value="<?php echo wp_kses( $settings['preCountDownSeconds'], array() ); ?>" />
+			<input id="sw-totalSeconds" type="hidden" value="<?php echo wp_kses( $settings['countDownLength'], array() ); ?>" />
 			<div id="sw-time" <?php echo $this->get_render_attribute_string( 'countDownLength' ); ?>></div>
 			<div id="sw-go" onclick="startTimer()" class="timer-button" <?php echo $this->get_render_attribute_string( 'startButtonText' ); ?>><?php echo wp_kses( $settings['startButtonText'], array() ); ?></div>
 			<div id="sw-rst" onclick="resetTimer()" class="timer-button" <?php echo $this->get_render_attribute_string( 'endButtonText' ); ?>><?php echo wp_kses( $settings['endButtonText'], array() ); ?></div>
 		</div>
 		<script type="text/javascript">
-				var totalSeconds = jQuery('#sw-totalSeconds').val();
-				var preCountSeconds = jQuery('#sw-preCountSeconds').val();
-
-				var timer_hours   = Math.floor(totalSeconds/ 3600);
-				var timer_minutes = Math.floor((totalSeconds - (timer_hours * 3600)) / 60);
-				var timer_seconds = totalSeconds - (timer_hours * 3600) - (timer_minutes * 60);
+				var totalSeconds = document.getElementById('sw-totalSeconds').value;
+				var preCountSeconds = document.getElementById('sw-preCountSeconds').value;
 
 				function timer_convert2HHMMSS(seconds) {
-					var hours = timer_hours;
-					var minutes = timer_minutes;
-					var seconds = timer_seconds;
-					
+					var hours   = Math.floor(seconds/ 3600);
+					var minutes = Math.floor((seconds - (hours * 3600)) / 60);
+					var seconds = seconds - (hours * 3600) - (minutes * 60);
+
+
 					if (hours   < 10) {hours   = "0"+hours;}
 					if (minutes < 10) {minutes = "0"+minutes;}
 					if (seconds < 10) {seconds = "0"+seconds;}
@@ -219,13 +216,12 @@ class Timer extends Widget_Base {
 				};
 
 				startTimer = () => {
+					shortBeep.play();
 					tempTimeInterval = createTimeInterval(
-						0,
 						preCountSeconds,
-						false,
 						(temp = true),
 						() => {
-							timeInterval = createTimeInterval(3, 0, false, false);
+							timeInterval = createTimeInterval(totalSeconds, false);
 						}
 					);
 				};
@@ -236,41 +232,26 @@ class Timer extends Widget_Base {
 					timer.innerHTML = "03:00";
 				};
 
-				const createTimeInterval = (minute, second, odd, temp = false, fn) => {
+				const createTimeInterval = (seconds, temp = false, countDown) => {
 					return setInterval(() => {
-						// check if we are odd or even and append class to timer
-						odd = !odd;
-						if (odd) {
-							timer.classList.add("odd");
-						} else {
-							timer.classList.remove("odd");
-						}
+						timer.innerHTML = timer_convert2HHMMSS(seconds);
 
-						// We set the timer text to include a two digit representation
-						timer.innerHTML =
-							(minute < 10 ? "0" + minute : minute) +
-							":" +
-							(second < 10 ? "0" + second : second);
-
-						// We check if the second equals 0
-						if (second == 0) {
-							if (minute === 0) {
-								playLongBeebSound();
-								clearInterval(temp ? tempTimeInterval : timeInterval);
-
-								fn();
+						// We check if the seconds equals 0
+						if (seconds == 0) {
+							playLongBeebSound();
+							clearInterval(temp ? tempTimeInterval : timeInterval);
+							if (countDown != null) {
+								countDown();
 							}
-							minute--;
-							second = 60;
 						}
-						allowedSeconds = [10, 3, 2, 1];
-						if (!minute && allowedSeconds.some((el) => el == second))
+						allowedSeconds = [3, 2, 1];
+						if (allowedSeconds.some((el) => el == seconds))
 							playBeepSound();
-						second--;
+						seconds--;
 					}, 1000);
 				};
 				// Set the initial display text
-				jQuery("#sw-time").text(timer_convert2HHMMSS(totalSeconds));
+				timer.textContent = timer_convert2HHMMSS(totalSeconds);
 			</script>
 
 		<?php
@@ -300,7 +281,7 @@ class Timer extends Widget_Base {
     	</div>
 
 		<script type="text/javascript">
-				var totalSeconds = jQuery('#sw-totalSeconds').value();
+				var totalSeconds = document.getELementById('sw-totalSeconds').value;
 
 				function timer_convert2HHMMSS(seconds) {
 					var hours   = Math.floor(seconds/ 3600);
