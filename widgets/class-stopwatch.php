@@ -1,20 +1,20 @@
 <?php
 /**
- * TimerForElementor class.
+ * TinyCog Timer Stopwatch class.
  *
  * @category   Class
- * @package    Timer For Elementor
+ * @package    Tinycog Timer
  * @subpackage WordPress
  * @author     Josh Holmes <josh@joshholmes.com>
  * @copyright  2021 Josh Holmes
- * @license    https://opensource.org/licenses/GPL-3.0 GPL-3.0-only
- * @link       link(https://github.com/joshholmes/timer-for-elementor,
- *             Timer for Elementor)
- * @since      1.0.0
+ * @license    https://opensource.org/licenses/GPL-2.0 
+ * @link       link(https://github.com/joshholmes/tinycog-timer,
+ *             Tinycog Timer)
+ * @since      0.0.1
  * php version 7.3.9
  */
 
-namespace TimerForElementor\Widgets;
+namespace TinycogTimer\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
@@ -23,9 +23,7 @@ use Elementor\Controls_Manager;
 defined( 'ABSPATH' ) || die();
 
 /**
- * Timer For Elementor widget class.
- *
- * @since 1.0.0
+ * Tinycog Stopwatch widget class.
  */
 class Stopwatch extends Widget_Base {
 	/**
@@ -37,13 +35,11 @@ class Stopwatch extends Widget_Base {
 	public function __construct( $data = array(), $args = null ) {
 		parent::__construct( $data, $args );
 
-		wp_register_style( 'stopwatch', plugins_url( '/assets/css/timer.css', TIMER_FOR_ELEMENTOR ), array(), '1.0.0' );
+		wp_register_style( 'stopwatch', plugins_url( '/assets/css/timer.css', TINYCOG_TIMER ), array(), '0.0.1' );
 	}
 
 	/**
 	 * Retrieve the widget name.
-	 *
-	 * @since 1.0.0
 	 *
 	 * @access public
 	 *
@@ -56,20 +52,16 @@ class Stopwatch extends Widget_Base {
 	/**
 	 * Retrieve the widget title.
 	 *
-	 * @since 1.0.0
-	 *
 	 * @access public
 	 *
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Timer for Elementor - Stopwatch', 'elementor-timer-stopwatch' );
+		return __( 'Tinycog Timer - Stopwatch', 'tinycog-timer-stopwatch' );
 	}
 
 	/**
 	 * Retrieve the widget icon.
-	 *
-	 * @since 1.0.0
 	 *
 	 * @access public
 	 *
@@ -117,34 +109,34 @@ class Stopwatch extends Widget_Base {
 		$this->start_controls_section(
 			'section_content',
 			array(
-				'label' => __( 'Content', 'elementor-timer' ),
+				'label' => __( 'Content', 'tinycog-timer' ),
 			)
 		);
 
 		$this->add_control(
 			'preCountDownSeconds',
 			array(
-				'label'   => __( 'Pre Count down Seconds', 'elementor-timer' ),
+				'label'   => __( 'Pre Count down Seconds', 'tinycog-timer' ),
 				'type'    => Controls_Manager::NUMBER,
-				'default' => __( '10', 'elementor-timer' ),
+				'default' => __( '10', 'tinycog-timer' ),
 			)
 		);
 
 		$this->add_control(
 			'startButtonText',
 			array(
-				'label'   => __( 'startButtonText', 'elementor-timer' ),
+				'label'   => __( 'startButtonText', 'tinycog-timer' ),
 				'type'    => Controls_Manager::TEXT,
-				'default' => __( 'Start', 'elementor-timer' ),
+				'default' => __( 'Start', 'tinycog-timer' ),
 			)
 		);
 
 		$this->add_control(
 			'endButtonText',
 			array(
-				'label'   => __( 'endButtonText', 'elementor-timer' ),
+				'label'   => __( 'endButtonText', 'tinycog-timer' ),
 				'type'    => Controls_Manager::TEXT,
-				'default' => __( 'End', 'elementor-timer' ),
+				'default' => __( 'End', 'tinycog-timer' ),
 			)
 		);
 
@@ -167,15 +159,15 @@ class Stopwatch extends Widget_Base {
 		$this->add_inline_editing_attributes( 'endButtonText', 'basic' );
 		?>
 
-		<div class="timer">
+		<div class="tinycog-timer">
 		
-			<input id="timer-for-elementor-preCountSeconds" type="hidden" value="<?php echo wp_kses( $settings['preCountDownSeconds'], array() ); ?>" />
-			<div id="timer-for-elementor-time" <?php echo $this->get_render_attribute_string( 'countDownLength' ); ?>></div>
-			<div id="timer-for-elementor-go" onclick="startTimer()" class="timer-button" <?php echo $this->get_render_attribute_string( 'startButtonText' ); ?>><?php echo wp_kses( $settings['startButtonText'], array() ); ?></div>
-			<div id="timer-for-elementor-rst" onclick="resetTimer()" class="timer-button" <?php echo $this->get_render_attribute_string( 'endButtonText' ); ?>><?php echo wp_kses( $settings['endButtonText'], array() ); ?></div>
+			<input id="tinycog-timer-preCountSeconds" type="hidden" value="<?php echo wp_kses( $settings['preCountDownSeconds'], array() ); ?>" />
+			<div id="tinycog-timer-time-display" <?php echo $this->get_render_attribute_string( 'countDownLength' ); ?>></div>
+			<div id="tinycog-timer-start" onclick="startTimer()" class="tinycog-timer-button" <?php echo $this->get_render_attribute_string( 'startButtonText' ); ?>><?php echo wp_kses( $settings['startButtonText'], array() ); ?></div>
+			<div id="tinycog-timer-reset" onclick="resetTimer()" class="tinycog-timer-button" <?php echo $this->get_render_attribute_string( 'endButtonText' ); ?>><?php echo wp_kses( $settings['endButtonText'], array() ); ?></div>
 		</div>
 		<script type="text/javascript">
-				var preCountSeconds = document.getElementById('timer-for-elementor-preCountSeconds').value;
+				var preCountSeconds = document.getElementById('tinycog-timer-preCountSeconds').value;
 				var totalSeconds = 0;
 
 				function timer_convert2HHMMSS(seconds) {
@@ -189,7 +181,7 @@ class Stopwatch extends Widget_Base {
 					return hours+':'+minutes+':'+seconds;
 				}
 
-				const timer = document.getElementById("timer-for-elementor-time");
+				const timer = document.getElementById("tinycog-timer-time-display");
 				var preCountDownInterval, countUpInterval;
 
 				const shortBeep = new Audio("<?php echo plugin_dir_url( __FILE__ ) ?>../assets/audio/short-beep.wav");
@@ -273,11 +265,11 @@ class Stopwatch extends Widget_Base {
 		view.addInlineEditingAttributes( 'startButtonText', 'basic' );
 		view.addInlineEditingAttributes( 'endButtonText', 'basic' );
 		#>
-		<div class="timer">
-		<input id="timer-for-elementor-totalSeconds" type="hidden" value="{{{ settings.countDownLength }}}" />
-        <div id="timer-for-elementor-time">{{{ settings.countDownLength }}}</div>
-        <button id="timer-for-elementor-go" class="timer-button">{{{ settings.startButtonText }}}</button>
-        <button id="timer-for-elementor-rst" class="timer-button" onclick="resetTimer()">{{{ settings.endButtonText }}}</button>
+		<div class="tinycog-timer">
+		<input id="tinycog-timer-totalSeconds" type="hidden" value="{{{ settings.countDownLength }}}" />
+        <div id="tinycog-timer-time-display">{{{ settings.countDownLength }}}</div>
+        <button id="tinycog-timer-start" class="tinycog-timer-button">{{{ settings.startButtonText }}}</button>
+        <button id="tinycog-timer-reset" class="tinycog-timer-button" onclick="resetTimer()">{{{ settings.endButtonText }}}</button>
     	</div>
 
 		<script type="text/javascript">

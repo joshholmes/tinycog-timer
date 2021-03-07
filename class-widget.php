@@ -3,18 +3,18 @@
  * Widgets class.
  *
  * @category   Class
- * @package    Timer For Elementor
+ * @package    Tinycog Timer
  * @subpackage WordPress
  * @author     Josh Holmes <josh@joshholmes.com>
  * @copyright  2021 Josh Holmes
- * @license    https://opensource.org/licenses/GPL-3.0 GPL-3.0-only
- * @link       link(https://github.com/joshholmes/timer-for-elementor,
- *             Timer for Elementor)
- * @since      1.0.0
+ * @license    https://opensource.org/licenses/GPL-2.0
+ * @link       link(https://github.com/joshholmes/tinycog-timer,
+ *             Tinycog Timer)
+ * @since      0.0.1
  * php version 7.3.9
 */
 
-namespace TimerForElementor;
+namespace TinycogTimer;
 
 // Security Note: Blocks direct access to the plugin PHP files.
 defined( 'ABSPATH' ) || die();
@@ -24,14 +24,12 @@ defined( 'ABSPATH' ) || die();
  *
  * Main Plugin class
  *
- * @since 1.0.0
  */
 class Widgets {
 
 	/**
 	 * Instance
 	 *
-	 * @since 1.0.0
 	 * @access private
 	 * @static
 	 *
@@ -44,7 +42,6 @@ class Widgets {
 	 *
 	 * Ensures only one instance of the class is loaded or can be loaded.
 	 *
-	 * @since 1.0.0
 	 * @access public
 	 *
 	 * @return Plugin An instance of the class.
@@ -62,7 +59,6 @@ class Widgets {
 	 *
 	 * Load widgets files
 	 *
-	 * @since 1.0.0
 	 * @access private
 	 */
 	private function include_widgets_files() {
@@ -75,7 +71,6 @@ class Widgets {
 	 *
 	 * Register new Elementor widgets.
 	 *
-	 * @since 1.0.0
 	 * @access public
 	 */
 	public function register_widgets() {
@@ -92,7 +87,6 @@ class Widgets {
 	 *
 	 * Register plugin action hooks and filters
 	 *
-	 * @since 1.0.0
 	 * @access public
 	 */
 	public function __construct() {

@@ -1,16 +1,16 @@
 <?php
 /**
- * TimerForElementor class. 
+ * Tinycog Timer class. 
  *
  * @category   Class
- * @package    TimerForElementor
+ * @package    Tinycog Timer
  * @subpackage WordPress
  * @author     Josh Holmes <josh@joshholmes.com>
  * @copyright  2021 Josh Holmes
- * @license    https://opensource.org/licenses/GPL-3.0 GPL-3.0-only
- * @link       link(https://github.com/joshholmes/timer-for-elementor,
+ * @license    https://opensource.org/licenses/GPL-2.0
+ * @link       link(https://github.com/joshholmes/tinycog-timer,
  *             Github)
- * @since      1.0.0
+ * @since      0.0.1
  * php version 7.3.9
  * 
  */
@@ -23,15 +23,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Timer with countdown for Elementor
  */
-final class Timer_For_Elementor {
+final class Tinycog_Timer {
 
 	/**
 	 * Plugin Version
 	 *
-	 * @since 1.0.0
 	 * @var string The plugin version.
 	 */
-	const VERSION = '1.0.0';
+	const VERSION = '0.0.1';
 
 	/**
 	 * Minimum Elementor Version
@@ -85,7 +84,6 @@ final class Timer_For_Elementor {
 	 *
 	 * Fired by `plugins_loaded` action hook.
 	 *
-	 * @since 1.0.0
 	 * @access public
 	 */
 	public function init() {
@@ -117,11 +115,10 @@ final class Timer_For_Elementor {
 	 *
 	 * Warning when the site doesn't have Elementor installed or activated.
 	 *
-	 * @since 1.0.0
 	 * @access public
 	 */
 	public function admin_notice_missing_main_plugin() {
-		deactivate_plugins( plugin_basename( TIMER_FOR_ELEMENTOR ) );
+		deactivate_plugins( plugin_basename( TINYCOG_TIMER ) );
 
 		return sprintf(
 			wp_kses(
@@ -134,7 +131,7 @@ final class Timer_For_Elementor {
 					),
 				)
 			),
-			'Timer for Elementor',
+			'Tinycog Timer',
 			'Elementor'
 		);
 	}
@@ -148,7 +145,7 @@ final class Timer_For_Elementor {
 	 * @access public
 	 */
 	public function admin_notice_minimum_elementor_version() {
-		deactivate_plugins( plugin_basename( TIMER_FOR_ELEMENTOR ) );
+		deactivate_plugins( plugin_basename( TINYCOG_TIMER ) );
 
 		return sprintf(
 			wp_kses(
@@ -161,7 +158,7 @@ final class Timer_For_Elementor {
 					),
 				)
 			),
-			'Timer for Elementor',
+			'Tinycog Timer',
 			'Elementor',
 			self::MINIMUM_ELEMENTOR_VERSION
 		);
@@ -176,7 +173,7 @@ final class Timer_For_Elementor {
 	 * @access public
 	 */
 	public function admin_notice_minimum_php_version() {
-		deactivate_plugins( plugin_basename( TIMER_FOR_ELEMENTOR ) );
+		deactivate_plugins( plugin_basename( TINYCOG_TIMER ) );
 
 		return sprintf(
 			wp_kses(
@@ -189,12 +186,12 @@ final class Timer_For_Elementor {
 					),
 				)
 			),
-			'Timer for Elementor',
+			'Tinycog Timer',
 			'Elementor',
 			self::MINIMUM_ELEMENTOR_VERSION
 		);
 	}
 }
 
-// Instantiate Timer_For_Elementor.
-new Timer_For_Elementor();
+// Instantiate Tinycog_timer.
+new Tinycog_Timer();
