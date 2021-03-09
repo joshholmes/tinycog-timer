@@ -10,7 +10,7 @@ The Timer counts down for the number of seconds specified and the Stopwatch coun
 This is a Wordpress plugin that requires Elementor. 
 - Install Wordpress
 - Install Elementor in your Wordpress instance 
-- Download the Zip of this project from Github
+- Download the Zip of this project from Github (This project will be submitted to the Wordpress Plugins listings at some point but downloading the Zip and installing via upload or manual is the correct proceedure at the moment)
 - Follow the instructions to install a plugin via upload or manual installation here [https://wordpress.org/support/article/managing-plugins/](Managing Plugins)
 
 ## Usage example
