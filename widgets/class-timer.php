@@ -121,6 +121,15 @@ class Timer extends Widget_Base {
 		);
 
 		$this->add_control(
+			'cssPick',
+			array(
+				'label'   => __( 'CSS', 'tinycog-timer' ),
+				'type'    => Controls_Manager::HIDDEN,
+				'default' => __( 'timer.css', 'tinycog-timer' ),
+			)
+		);
+
+		$this->add_control(
 			'countDownLength',
 			array(
 				'label'   => __( 'Count down in Seconds', 'tinycog-timer' ),

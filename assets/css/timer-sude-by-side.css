@@ -1,0 +1,63 @@
+.tinycog-timer {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+#tinycog-timer-time-display {
+    width: 100%;
+    padding: 20px 0;
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    background: #0b2d49;
+    color: #f0ab00;
+    border: 2px solid white;
+}
+
+#tinycog-timer-time-display.pre-countdown {
+    color: red;
+}
+
+#tinycog-timer-reset,
+#tinycog-timer-start {
+    box-sizing: border-box;
+    width: 50%;
+    cursor: pointer;
+    padding: 20px 0;
+    border: 0;
+    color: #fff;
+    font-size: 20px;
+    border: 2px solid white;
+}
+
+#tinycog-timer-reset {
+    background-color: #0075b0;
+}
+
+#tinycog-timer-start {
+    background-color: #f0ab00;
+}
+
+#tinycog-timer-timer {
+    margin-bottom: 25px;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #2a9d8f;
+}
+
+.tinycog-timer-button {
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    padding: 1rem 2rem;
+    margin: 0;
+    text-decoration: none;
+    color: #000; 
+    font-family: sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 250ms ease-in-out;
+}
