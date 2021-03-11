@@ -223,6 +223,7 @@ class Timer extends Widget_Base {
 					clearInterval(timeInterval);
 					clearInterval(tempTimeInterval);
 					timer.innerHTML = timer_convert2HHMMSS(totalSeconds);
+					timer.classList.remove("pre-countdown");
 					timerRunning = false;
 				};
 
@@ -278,8 +279,8 @@ class Timer extends Widget_Base {
 		<div class="tinycog-timer">
 		<input id="tinycog-timer-totalSeconds" type="hidden" value="{{{ settings.countDownLength }}}" />
         <div id="tinycog-timer-time-display">{{{ settings.countDownLength }}}</div>
-        <button id="tinycog-timer-start" class="tinycog-timer-button">{{{ settings.startButtonText }}}</button>
-        <button id="tinycog-timer-reset" class="tinycog-timer-button" onclick="resetTimer()">{{{ settings.endButtonText }}}</button>
+        <button id="tinycog-timer-start-designtime" class="tinycog-timer-button">{{{ settings.startButtonText }}}</button>
+        <button id="tinycog-timer-reset-designtime" class="tinycog-timer-button" onclick="resetTimer()">{{{ settings.endButtonText }}}</button>
     	</div>
 
 		<script type="text/javascript">
