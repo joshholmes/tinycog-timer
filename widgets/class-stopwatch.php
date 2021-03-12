@@ -209,6 +209,7 @@ class Stopwatch extends Widget_Base {
 				resetTimer = () => {
 					clearInterval(countUpInterval);
 					clearInterval(preCountDownInterval);
+					timer.classList.remove("pre-countdown");
 					timer.innerHTML = timer_convert2HHMMSS(totalSeconds);
 					timerRunning = false;
 				};
